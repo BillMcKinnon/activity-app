@@ -1,0 +1,27 @@
+!!!
+%html
+  %head
+    %title Activity App
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag 'application', media: 'all'
+    = javascript_include_tag 'https://cdn.jsdelivr.net/jquery/latest/jquery.min.js', defer: true
+    = javascript_include_tag 'application', defer: true
+    %body
+      %header
+        .container
+          - flash.each do |message_type, message|
+            = content_tag(:div, message, class: "alert alert-#{message_type}")
+          = link_to "Activity App", root_path
+          %nav
+            %ul
+              %li= link_to "Home", root_path
+              / Replace with current_user below and add the if/else back when fixed
+              %li= link_to "Profile", root_path
+              %li= link_to "Activities", activities_path
+              %li
+                = link_to "Log out", logout_path, method: :delete
+              %li= link_to "Log in", login_path
+              %li= link_to "Sign up", signup_path
+      = yield
+
