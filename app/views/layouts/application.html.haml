@@ -16,12 +16,12 @@
           %nav
             %ul
               %li= link_to "Home", root_path
-              / Replace with current_user below and add the if/else back when fixed
-              %li= link_to "Profile", root_path
-              %li= link_to "Activities", activities_path
-              %li
-                = link_to "Log out", logout_path, method: :delete
-              %li= link_to "Log in", login_path
-              %li= link_to "Sign up", signup_path
+              - if logged_in?
+                %li= link_to "Profile", user_path(current_user) 
+                %li= link_to "Activities", activities_path
+                %li= link_to "Log out", logout_path, method: :delete
+              - else
+                %li= link_to "Log in", login_path
+                %li= link_to "Sign up", signup_path
       = yield
 

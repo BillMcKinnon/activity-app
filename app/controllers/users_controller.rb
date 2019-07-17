@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       log_in @user
-  #    redirect_to activities_path
+      redirect_to activities_path
     else
       redirect_to root_url
     end 

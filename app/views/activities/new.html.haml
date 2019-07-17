@@ -1,0 +1,14 @@
+%h1 Add an activity
+
+= form_for @activity do |f|
+  = f.label :name
+  = f.text_field :name
+
+  = f.label :category, "Type"
+  = f.select :category,
+    options_for_select([['Contributor', 'contributor'], ['Subtractor', 'subtractor']])
+
+  = f.label :minutes, "Duration of Performance"
+  = f.number_field :minutes, placeholder: "Minutes"
+
+  = f.submit "Submit"
