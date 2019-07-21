@@ -1,3 +1,13 @@
 %h1 #{current_user.name}'s Activities
 
-= link_to "Add Activity", new_activity_path
+
+%h2 Current Balance: #{@activity_balance}
+
+= link_to "+", new_activity_path
+
+%ul
+  - @activities.each do |activity|
+    %li= "Name: " + activity.name.capitalize
+    %li= "Type: " + activity.category.capitalize
+    %li= "Duration: " + activity.minutes.to_i.to_s
+    %br
