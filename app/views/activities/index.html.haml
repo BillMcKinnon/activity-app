@@ -1,7 +1,6 @@
 %h1 #{current_user.name}'s Activities
 
-
-%h2 Current Balance: #{@activity_balance}
+%h2 Balance: #{@activity_balance.to_i} (#{@activity_rounded_hour} hrs)
 
 = link_to "+", new_activity_path
 
@@ -10,4 +9,6 @@
     %li= "Name: " + activity.name.capitalize
     %li= "Type: " + activity.category.capitalize
     %li= "Duration: " + activity.minutes.to_i.to_s
+    %li= "Date: " + activity.created_at.strftime("%A, %B %e, %Y")
     %br
+

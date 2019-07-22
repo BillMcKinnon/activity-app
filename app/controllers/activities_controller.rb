@@ -3,7 +3,8 @@ class ActivitiesController < ApplicationController
 
   def index
     @activities = current_user.activities
-    @activity_balance = find_activity_balance.to_i
+    @activity_balance = find_activity_balance
+    @activity_rounded_hour = convert_to_rounded_hour
   end
 
   def new
@@ -35,8 +36,13 @@ class ActivitiesController < ApplicationController
     end
 
     def find_activity_balance
-      contributor_sum = current_user.activities.where("category = 'contributor'").sum(:minutes)
-      subtractor_sum = current_user.activities.where("category = 'subtractor'").sum(:minutes)
+      contributor_sum = current_user.activities.where(category: 'contributor').sum(:minutes)
+      subtractor_sum = current_user.activities.where(category: 'subtractor').sum(:minutes)
       contributor_sum - subtractor_sum
+    end
+    
+    def convert_to_rounded_hour
+      rounded_hour = @activity_balance / 60
+      rounded_hour.round(1)
     end
 end
