@@ -17,7 +17,7 @@ class ActivitiesController < ApplicationController
       flash[:success] = "Activity saved."
       redirect_to activities_path
     else
-      flash.now[:danger] = "There are errors."
+      flash[:danger] = @activity.errors.full_messages
       render 'new'
     end
   end

@@ -15,7 +15,8 @@ class UsersController < ApplicationController
       log_in @user
       redirect_to activities_path
     else
-      redirect_to root_url
+      flash[:danger] = @user.errors.full_messages
+      render 'new'
     end 
   end
 
