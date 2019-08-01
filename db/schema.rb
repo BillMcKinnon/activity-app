@@ -10,27 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_17_000739) do
+ActiveRecord::Schema.define(version: 2019_07_29_045733) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "activities", force: :cascade do |t|
     t.string "name"
-    t.float "minutes"
+    t.string "category"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id"
-    t.string "category"
     t.index ["user_id"], name: "index_activities_on_user_id"
+  end
+
+  create_table "entries", force: :cascade do |t|
+    t.float "minutes"
+    t.bigint "user_id"
+    t.bigint "activity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["activity_id"], name: "index_entries_on_activity_id"
+    t.index ["user_id"], name: "index_entries_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
+    t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "password_digest"
   end
 
+  add_foreign_key "activities", "users"
+  add_foreign_key "entries", "activities"
+  add_foreign_key "entries", "users"
 end
