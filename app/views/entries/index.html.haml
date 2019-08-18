@@ -1,0 +1,12 @@
+%h1 #{current_user.name}'s Activities
+
+%h2 Balance: #{@entry_balance.to_i} (#{@entry_rounded_hour} hrs)
+
+= link_to "+", new_entry_path
+
+%ul
+  - @activities.each do |activity|
+    %li= "Name: " + activity.name.capitalize
+    %li= "Type: " + activity.category.capitalize
+    %br
+

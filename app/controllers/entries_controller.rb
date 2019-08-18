@@ -3,19 +3,28 @@ class EntriesController < ApplicationController
 
   def index
     @activities = current_user.activities
-    @activity_balance = find_activity_balance
-    @activity_rounded_hour = convert_to_rounded_hour
+    @entry_balance = find_entry_balance
+    @entry_rounded_hour = convert_to_rounded_hour
   end
 
   def new
     @entry = Entry.new
+    @activities = current_user.activities
   end
 
   def create
-    Entry.create(
-      activity: activity,
-      *entry_params
-    )
+    @entry = current_user.entries.build(entry_params)
+    if @entry.activity_id.blank?
+      activity = current_user.activities.create(name: params[:activity_name], category: params[:activity_category])
+      @entry.activity_id = activity.id
+    end
+    if @entry.save
+      flash[:success] = "Entry saved."
+      redirect_to new_entry_path
+    else
+      flash[:danger] = @entry.errors.full_messages
+      render 'new'
+    end
   end
 
   def show
@@ -23,31 +32,23 @@ class EntriesController < ApplicationController
   end
 
   def destroy
+
   end
 
-
   private
-    def activity
-      if params[:entry][:activity_name].present?
-        Activity.create(name: params[:entry][:activity_name], categpry: params[:entry][:activity_category])
-      end
-    end
 
-    def entry_params
-      params.require(:entry).permit(:activity_id, :minutes)
-    end
-  #  def activity_params
-  #    params.require(:activity).permit(:name, :category, :minutes)
-  #  end
+  def entry_params
+    params.require(:entry).permit(:minutes, :activity_id)
+  end
 
-  #  def find_activity_balance
-  #    contributor_sum = current_user.activities.where(category: 'contributor').sum(:minutes)
-  #    subtractor_sum = current_user.activities.where(category: 'subtractor').sum(:minutes)
-  #    contributor_sum - subtractor_sum
-  #  end
-  #  
-  #  def convert_to_rounded_hour
-  #    rounded_hour = @activity_balance / 60
-  #    rounded_hour.round(1)
-  #  end
+  def find_entry_balance
+    contributor_sum = current_user.entries.joins(:activity).where(activities: { category: 'contributor' }).sum(:minutes)
+    subtractor_sum = current_user.entries.joins(:activity).where(activities: { category: 'subtractor' }).sum(:minutes)
+    contributor_sum - subtractor_sum
+  end
+  
+  def convert_to_rounded_hour
+    rounded_hour = @entry_balance / 60
+    rounded_hour.round(1)
+  end
 end
