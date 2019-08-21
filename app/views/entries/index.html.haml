@@ -2,9 +2,8 @@
 - if @activities.any?
   %h2 Balance: #{@entry_balance.to_i} (#{@entry_rounded_hour} hrs)
 
-= link_to "+", new_entry_path
+  = link_to "+", new_entry_path
 
-- if @activities.any?
   %ul
     - @activities.each do |activity|
       %li= "Name: " + activity.name.capitalize
@@ -12,5 +11,5 @@
       %li= "Time Spent: " + distance_of_time_in_words(0, @entries.joins(:activity).where(activities: { name: activity.name }).sum(:minutes)*60)
       %br
 - else
-  %p No activities yet! Add one by clicking the + above.
+  %p No activities yet. #{link_to "Add one!", new_entry_path}
 

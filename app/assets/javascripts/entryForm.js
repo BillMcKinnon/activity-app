@@ -1,4 +1,4 @@
-$(document).ready(function() {
+var ready = function() {
   $("#entry_activity_id").change(function(){
     if($(this).val() == "")
     {
@@ -6,5 +6,8 @@ $(document).ready(function() {
       $("#entry_activity_id").addClass("hidden");
     }
   });  
-});
+};
+
+$(document).ready(ready);
+$(document).on('turbolinks:load', ready);
 
