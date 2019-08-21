@@ -8,5 +8,6 @@
   - @activities.each do |activity|
     %li= "Name: " + activity.name.capitalize
     %li= "Type: " + activity.category.capitalize
+    %li= "Time Spent: " + distance_of_time_in_words(0, @entries.joins(:activity).where(activities: { name: activity.name }).sum(:minutes)*60)
     %br
 

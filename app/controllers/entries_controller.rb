@@ -5,6 +5,7 @@ class EntriesController < ApplicationController
     @activities = current_user.activities
     @entry_balance = find_entry_balance
     @entry_rounded_hour = convert_to_rounded_hour
+    @entries = current_user.entries
   end
 
   def new
@@ -20,7 +21,7 @@ class EntriesController < ApplicationController
     end
     if @entry.save
       flash[:success] = "Entry saved."
-      redirect_to new_entry_path
+      redirect_to entries_path
     else
       flash[:danger] = @entry.errors.full_messages
       render 'new'
