@@ -4,10 +4,13 @@
 
 = link_to "+", new_entry_path
 
-%ul
-  - @activities.each do |activity|
-    %li= "Name: " + activity.name.capitalize
-    %li= "Type: " + activity.category.capitalize
-    %li= "Time Spent: " + distance_of_time_in_words(0, @entries.joins(:activity).where(activities: { name: activity.name }).sum(:minutes)*60)
-    %br
+- if @activities.any?
+  %ul
+    - @activities.each do |activity|
+      %li= "Name: " + activity.name.capitalize
+      %li= "Type: " + activity.category.capitalize
+      %li= "Time Spent: " + distance_of_time_in_words(0, @entries.joins(:activity).where(activities: { name: activity.name }).sum(:minutes)*60)
+      %br
+- else
+  %p No activities yet! Add one by clicking the + above.
 

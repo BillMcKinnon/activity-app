@@ -1,4 +1,4 @@
-%h1 Add Entry
+%h1 Record an activity
 = form_for @entry do |f|
   = f.select(:activity_id, current_user.activities.map { |activity| [activity.name.capitalize, activity.id] } + [["Add new...", "", { class: "add-new-activity"}]], include_blank: true)
   = text_field_tag :activity_name, nil, { placeholder: "Activity name", class: "activity-name-input hidden" } 
