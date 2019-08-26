@@ -7,5 +7,9 @@
   = f.label :password
   = f.password_field :password
 
+  = f.label :remember_me do 
+    = f.check_box :remember_me
+    %span Remember me on this computer
+
   = f.submit "Log in"
 
