@@ -19,6 +19,7 @@ gem 'uglifier', '>= 1.3.0'
 gem "haml"
 gem "bcrypt"
 gem "jquery-rails"
+gem 'dotenv-rails', groups: [:development, :test]
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
