@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
-  get 'password_resets/new'
   root 'static_pages#home'
+  get '/dashboard', to: 'dashboard#show'
   get '/signup', to: 'users#new'
   post '/signup', to: 'users#create'
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
-  resources :users, only: [:show]
-  resources :entries
+  resources :users, only: [:create]
+  resources :entries, only: [:create]
   resources :account_activations, only: [:edit]
-  resources :password_resets
+  resources :password_resets, except: :destroy
 end
 

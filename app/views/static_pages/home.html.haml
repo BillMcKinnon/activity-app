@@ -1,0 +1,26 @@
+%h2 Welcome to Bill's Activity App
+%p We all have things we want to be doing and things we know we should be doing. 
+%p This app is to track the time we put into things like personal development (contributors) vs R&R (subtractors). 
+%p The idea is to maintain a positive balance to stay ahead, increase personal accountability, and avoid that post-Netflix binge guilt.  
+
+- if !logged_in?
+  %h3 Sign Up
+
+  = form_for :user, url: signup_path do |f|
+    = f.label :first_name
+    = f.text_field :first_name
+
+    = f.label :last_name
+    = f.text_field :last_name
+
+    = f.label :email
+    = f.email_field :email
+
+    = f.label :password
+    = f.password_field :password
+
+    = f.label :password_confirmation
+    = f.password_field :password_confirmation
+
+    = f.submit "Create account"
+

@@ -5,16 +5,16 @@ class SessionsController < ApplicationController
       if user.activated?
         log_in user
         params[:session][:remember_me] == '1' ? remember(user) : forget(user)
-        redirect_to root_url
+        redirect_to dashboard_path
       else
         message  = "Account not activated."
         message += "Check your email for the activation link."
         flash[:warning] = message
-        redirect_to root_url
+        redirect_to root_path
       end
     else
       flash[:danger] = "Invalid email or password."
-      redirect_to root_url
+      redirect_to root_path
     end
   end
 
