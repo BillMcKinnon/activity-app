@@ -1,9 +1,12 @@
-%h1 Overview for #{current_user.first_name}.
+%h1 Overview for #{current_user.first_name}
 
-%h1 Activities
 - if @activities.any?
   %h2 Balance: #{@entry_balance.to_i} (#{@entry_rounded_hour} hrs)
-
+  - if session[:authorization]
+    %p Add event from calendar
+  - else
+    = link_to "Integrate Google Calendar", authorize_path
+  %p ---
   = form_for @entry do |f|
     = f.select(:activity_id, current_user.activities.map { |activity| [activity.name.capitalize, activity.id] } + [["Add new...", "", { class: "add-new-activity"}]], include_blank: true)
     = text_field_tag :activity_name, nil, { placeholder: "Activity name", class: "activity-name-input hidden" } 
@@ -21,9 +24,8 @@
 - else
   %p No activities yet, add one!
   = form_for @entry do |f|
-    = f.select(:activity_id, current_user.activities.map { |activity| [activity.name.capitalize, activity.id] } + [["Add new...", "", { class: "add-new-activity"}]], include_blank: true)
-    = text_field_tag :activity_name, nil, { placeholder: "Activity name", class: "activity-name-input hidden" } 
-    = select_tag :activity_category, options_for_select([['Contributor', 'contributor'], ['Subtractor', 'subtractor']]), { prompt: "Select type", class: "activity-category-input hidden" }
+    = text_field_tag :activity_name, nil, { placeholder: "Activity name", class: "activity-name-input" } 
+    = select_tag :activity_category, options_for_select([['Contributor', 'contributor'], ['Subtractor', 'subtractor']]), { prompt: "Select type" }
     = f.number_field :minutes, placeholder: "Minutes spent"
 
     = f.submit "Submit"

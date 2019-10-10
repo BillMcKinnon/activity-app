@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title Activity App
+    %title Onward
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag 'application', media: 'all'
@@ -17,11 +17,12 @@
             %nav
               %ul
                 - if logged_in?
-                  %li= link_to  "Activity App", dashboard_path
+                  - unless controller_name == "dashboard"
+                    %li= link_to  "Dashboard", dashboard_path
                   %li= link_to "Log out", logout_path, method: :delete
                 - else
-                  = link_to "Activity App", root_path
-                  = form_for(:session, url: login_path) do |f|
+                  = link_to "Onward", root_path
+                  = form_for(:session, url: login_path, html: { class: "login-form" }) do |f|
                     = f.label :email
                     = f.email_field :email
 
