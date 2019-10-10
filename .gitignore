@@ -7,6 +7,9 @@
 # Ignore stored environment variables
 .env
 
+# Ignore ds stores
+.DS_Store
+
 # Ignore vim swap and temp files
 *~
 *.swp
