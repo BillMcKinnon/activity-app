@@ -7,7 +7,11 @@
 # Ignore stored environment variables
 .env
 
+<<<<<<< HEAD
 # Ignore DS store
+=======
+# Ignore ds stores
+>>>>>>> style-frontend
 .DS_Store
 
 # Ignore vim swap and temp files

@@ -1,3 +1,11 @@
 .hidden {
   display: none;
 }
+
+.login-form{
+  display: inline-flex;
+}
+
+input {
+  margin-left: 10px;
+}
