@@ -3,7 +3,7 @@
 - if @activities.any?
   %h2 Balance: #{@entry_balance.to_i} (#{@entry_rounded_hour} hrs)
   - if session[:authorization]
-    %p Add event from calendar
+    %button Add event from calendar
   - else
     = link_to "Integrate Google Calendar", authorize_path
   %p ---

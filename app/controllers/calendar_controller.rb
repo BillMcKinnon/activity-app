@@ -8,7 +8,6 @@ class CalendarController < ApplicationController
     
     calendar_ids = service.list_calendar_lists.items.map { |calendar| calendar.id }
     event_list = calendar_ids.map{ |id| service.list_events(id, time_min: 1.hour.ago.rfc3339, time_max: DateTime.current.end_of_day) }
-    byebug
 
   rescue Google::Apis::AuthorizationError
     response = client.refresh!
