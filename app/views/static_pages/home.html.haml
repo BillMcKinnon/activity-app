@@ -1,18 +1,17 @@
 .container
   %h2 Welcome to Onward
-  %p We all have things we want to be doing and things we know we should be doing. 
-  %p This app is to track the time we put into things like personal development (contributors) vs R&R (subtractors). 
-  %p The idea is to maintain a positive balance to stay ahead, increase personal accountability, and avoid that post-Netflix binge guilt.  
+  %p Onward tracks the time you put into things like personal development (contributors) vs R&R (subtractors). 
+  %p The idea is to maintain a positive balance to stay ahead, increase personal accountability, and avoid things like post-Netflix binge guilt.  
 
   - if !logged_in?
     .row 
       %h3 Sign Up
 
       = form_for :user, url: signup_path do |f|
-        = f.label :first_name
+        = f.label :first_name, "First Name"
         = f.text_field :first_name
 
-        = f.label :last_name
+        = f.label :last_name, "Last Name"
         = f.text_field :last_name
 
         = f.label :email
@@ -21,7 +20,7 @@
         = f.label :password
         = f.password_field :password
 
-        = f.label :password_confirmation
+        = f.label :password_confirmation, "Password Confirmation"
         = f.password_field :password_confirmation
 
-        = f.submit "Create account"
+        = f.submit "Create Account"
