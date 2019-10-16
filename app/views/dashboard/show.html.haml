@@ -2,19 +2,19 @@
 
 - if @activities.any?
   %h2 Balance: #{@entry_balance.to_i} (#{@entry_rounded_hour} hrs)
-  - if session[:authorization]
-    %button#add_event Add event from calendar
-    .pull-event-form.hidden
-      = form_with(url: "/calendar_events", method: "get", local: true) do
-        .time-inputs
-          = label_tag('start', "Time Start")
-          = select_datetime(Time.current.beginning_of_day, order: [:month, :day, :year], ampm: true, prefix: "start")
-        .time-inputs
-          = label_tag('end', "Time End")
-          = select_datetime(Time.current.end_of_day, order: [:month, :day, :year], ampm: true, prefix: "end")
-        = submit_tag("Search Calendar Events")
-  - else
-    = link_to "Integrate Google Calendar", authorize_path
+- if session[:authorization]
+  %button#add_event Add event from calendar
+  .pull-event-form.hidden
+    = form_with(url: "/calendar_events", method: "get", local: true) do
+      .time-inputs
+        = label_tag('start', "Time Start")
+        = select_datetime(Time.current.beginning_of_day, order: [:month, :day, :year], ampm: true, prefix: "start")
+      .time-inputs
+        = label_tag('end', "Time End")
+        = select_datetime(Time.current.end_of_day, order: [:month, :day, :year], ampm: true, prefix: "end")
+      = submit_tag("Search Calendar Events")
+- else
+  = link_to "Integrate Google Calendar", authorize_path
   %p ---
   = form_for @entry do |f|
     = f.select(:activity_id, current_user.activities.map { |activity| [activity.name.capitalize, activity.id] } + [["Add new...", "", { class: "add-new-activity"}]], include_blank: true)
