@@ -1,20 +1,4 @@
 class CalendarController < ApplicationController
-  def index
-    client = Signet::OAuth2::Client.new(client_options)
-    client.update!(session[:authorization])
-
-    service = Google::Apis::CalendarV3::CalendarService.new
-    service.authorization = client
-    
-    calendar_ids = service.list_calendar_lists.items.map { |calendar| calendar.id }
-    event_list = calendar_ids.map{ |id| service.list_events(id, time_min: 1.hour.ago.rfc3339, time_max: DateTime.current.end_of_day) }
-
-  rescue Google::Apis::AuthorizationError
-    response = client.refresh!
-    session[:authorization] = session[:authorization].merge(response)
-    retry
-  end
-
   def authorize
     
   end
@@ -33,7 +17,7 @@ class CalendarController < ApplicationController
 
     session[:authorization] = response
 
-    redirect_to calendar_url
+    redirect_to dashboard_url
   end
 
   private
