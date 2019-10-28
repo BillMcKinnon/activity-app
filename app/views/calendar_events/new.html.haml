@@ -1,2 +1,4 @@
-- @events.each do |event|
-  %li= event
+- @events_with_times.each do |event|
+  %button= [event.summary + ", ", distance_of_time_in_words(event.start.date_time, event.end.date_time, scope: 'datetime.distance_in_words.short')].join
+
+
