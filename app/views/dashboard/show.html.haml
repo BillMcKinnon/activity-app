@@ -2,7 +2,7 @@
   %p#text_xl.overview-text Overview for #{current_user.first_name}
 
   - if @activities.any?
-    %p#text_lg.balance Balance: #{mins_to_condensed_time(@entry_balance.to_i)}
+    %p#text_lg{ data: { balance: true } } Balance: #{mins_to_condensed_time(@entry_balance.to_i)}
   - if session[:authorization]
     .pull-event-form.sm-screen-form
       = form_with(url: "/calendar_events", method: "get", local: true) do
@@ -33,32 +33,38 @@
     %span or
 
   - if @activities.any?
-    = form_for @entry, html: { class: "lg-screen-form" } do |f|
-      = f.select(:activity_id, current_user.activities.map { |activity| [activity.name.titleize, activity.id] } + [["Add new...", "", { class: "add-new-activity"}]])
-      = text_field_tag :activity_name, nil, { placeholder: "Activity Name", class: "activity-name-input hidden" } 
-      = select_tag :activity_category, options_for_select([['Contributor', 'contributor'], ['Subtractor', 'subtractor']]), { prompt: "Select type", class: "activity-category-input hidden" }
-      = f.number_field :minutes, placeholder: "Minutes Spent"
-      = f.submit "Submit"
-    
-    = form_for @entry, html: { class: "sm-screen-form" } do |f|
-      = f.select(:activity_id, current_user.activities.map { |activity| [activity.name.titleize, activity.id] } + [["Add new...", "", { class: "add-new-activity"}]])
-      = text_field_tag :activity_name, nil, { placeholder: "Activity Name", class: "activity-name-input hidden" } 
-      = select_tag :activity_category, options_for_select([['Contributor', 'contributor'], ['Subtractor', 'subtractor']]), { prompt: "Select type", class: "activity-category-input hidden" }
-      = f.number_field :minutes, placeholder: "Minutes Spent"
-      = f.submit "Submit"
+    .sm-screen-form
+      = form_for @entry do |f|
+        = f.select(:activity_id, current_user.activities.map { |activity| [activity.name.titleize, activity.id] } + [["Add new...", ""]], {}, { data: { activity_name_select: true }})
+        = text_field_tag :activity_name, nil, { placeholder: "Activity Name", class: "activity-name-input hidden" } 
+        = select_tag :activity_category, options_for_select([['Contributor', 'contributor'], ['Subtractor', 'subtractor']]), { prompt: "Select type", class: "activity-category-input hidden" }
+        = f.number_field :minutes, placeholder: "Minutes Spent"
+        = f.submit "Submit"
+
+    .lg-screen-form
+      = form_for @entry do |f|
+        = f.select(:activity_id, current_user.activities.map { |activity| [activity.name.titleize, activity.id] } + [["Add new...", ""]], {}, { data: { activity_name_select: true }})
+        = text_field_tag :activity_name, nil, { placeholder: "Activity Name", class: "activity-name-input hidden" } 
+        = select_tag :activity_category, options_for_select([['Contributor', 'contributor'], ['Subtractor', 'subtractor']]), { prompt: "Select type", class: "activity-category-input hidden" }
+        = f.number_field :minutes, placeholder: "Minutes Spent"
+        = f.submit "Submit"
   - else
     %p No activities yet, add one!
-    = form_for @entry, class: "sm-screen-form" do |f|
-      = text_field_tag :activity_name, nil, { placeholder: "Activity Name", class: "activity-name-input" } 
-      = select_tag :activity_category, options_for_select([['Contributor', 'contributor'], ['Subtractor', 'subtractor']]), { prompt: "Select type" }
-      = f.number_field :minutes, placeholder: "Minutes Spent"
-      = f.submit "Submit"
+    .sm-screen-form
+      = form_for @entry  do |f|
+        = f.select(:activity_id, current_user.activities.map { |activity| [activity.name.titleize, activity.id] } + [["Add new...", ""]], {}, { data: { activity_name_select: true }})
+        = text_field_tag :activity_name, nil, { placeholder: "Activity Name", class: "activity-name-input" } 
+        = select_tag :activity_category, options_for_select([['Contributor', 'contributor'], ['Subtractor', 'subtractor']]), { prompt: "Select type" }
+        = f.number_field :minutes, placeholder: "Minutes Spent"
+        = f.submit "Submit"
     
-    = form_for @entry, class: "lg-screen-form" do |f|
-      = text_field_tag :activity_name, nil, { placeholder: "Activity Name", class: "activity-name-input" } 
-      = select_tag :activity_category, options_for_select([['Contributor', 'contributor'], ['Subtractor', 'subtractor']]), { prompt: "Select type" }
-      = f.number_field :minutes, placeholder: "Minutes Spent"
-      = f.submit "Submit"
+    .lg-screen-form
+      = form_for @entry do |f|
+        = f.select(:activity_id, current_user.activities.map { |activity| [activity.name.titleize, activity.id] } + [["Add new...", ""]], {}, { data: { activity_name_select: true }})
+        = text_field_tag :activity_name, nil, { placeholder: "Activity Name", class: "activity-name-input" } 
+        = select_tag :activity_category, options_for_select([['Contributor', 'contributor'], ['Subtractor', 'subtractor']]), { prompt: "Select type" }
+        = f.number_field :minutes, placeholder: "Minutes Spent"
+        = f.submit "Submit"
 
   .row#sm_screen_row
     %p#text_lg.category-title.green Contributors

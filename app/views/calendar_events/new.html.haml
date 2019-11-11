@@ -6,7 +6,7 @@
       = f.number_field :minutes, { placeholder: "Minutes Spent", data: { event_minutes_input: true } }
 
       = f.submit "Submit"
-    %button#clear_form.sm-screen-button Clear Form
+    %button#clear_form.sm-screen-button{ data: { clear_form: true } } Clear Form
     
     = form_for @entry, html: { class: "lg-screen-form"} do |f|
       = text_field_tag :activity_name, nil, { placeholder: "Activity Name", data: { event_name_input: true } } 
@@ -14,7 +14,7 @@
       = f.number_field :minutes, { placeholder: "Minutes Spent", data: { event_minutes_input: true } }
 
       = f.submit "Submit"
-    %button#clear_form.lg-screen-button Clear Form
+    %button#clear_form.lg-screen-button{ data: { clear_form: true } } Clear Form
 
     %p#separator
   
@@ -31,7 +31,7 @@
         = f.number_field :minutes, { placeholder: "Minutes Spent", data: { event_minutes_input: true } }
 
         = f.submit "Submit"
-      %button#clear_form.lg-screen-button Clear Form
+      %button#clear_form.lg-screen-button{ data: { clear_form: true } } Clear Form
   
     .six.columns
       - @events_with_times.each do |event|
