@@ -59,7 +59,6 @@ class EntriesController < ApplicationController
   end
 
   private
-
   def entry_params
     params.require(:entry).permit(:minutes, :activity_id)
   end
