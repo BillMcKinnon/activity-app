@@ -1,10 +1,20 @@
-%h1 Overview for #{current_user.first_name}
+.container#dashboard_container
+  %p#text_xl.overview-text Overview for #{current_user.first_name}
 
-- if @activities.any?
-  %h2 Balance: #{@entry_balance.to_i} (#{@entry_rounded_hour} hrs)
+  - if @activities.any?
+    %p#text_lg.balance Balance: #{mins_to_condensed_time(@entry_balance.to_i)}
   - if session[:authorization]
-    %button#add_event Add event from calendar
-    .pull-event-form.hidden
+    .pull-event-form.sm-screen-form
+      = form_with(url: "/calendar_events", method: "get", local: true) do
+        .time-inputs
+          = label_tag('start', "Time Start")
+          = select_datetime(Time.current.beginning_of_day, order: [:month, :day, :year], ampm: true, prefix: "start")
+        .time-inputs
+          = label_tag('end', "Time End")
+          = select_datetime(Time.current.end_of_day, order: [:month, :day, :year], ampm: true, prefix: "end")
+        = submit_tag("Search Calendar Events")
+    
+    .pull-event-form.lg-screen-form
       = form_with(url: "/calendar_events", method: "get", local: true) do
         .time-inputs
           = label_tag('start', "Time Start")
@@ -14,28 +24,77 @@
           = select_datetime(Time.current.end_of_day, order: [:month, :day, :year], ampm: true, prefix: "end")
         = submit_tag("Search Calendar Events")
   - else
-    = link_to "Integrate Google Calendar", authorize_path
-  %p ---
-  = form_for @entry do |f|
-    = f.select(:activity_id, current_user.activities.map { |activity| [activity.name.capitalize, activity.id] } + [["Add new...", "", { class: "add-new-activity"}]], include_blank: true)
-    = text_field_tag :activity_name, nil, { placeholder: "Activity name", class: "activity-name-input hidden" } 
-    = select_tag :activity_category, options_for_select([['Contributor', 'contributor'], ['Subtractor', 'subtractor']]), { prompt: "Select type", class: "activity-category-input hidden" }
-    = f.number_field :minutes, placeholder: "Minutes spent"
+    %button.sm-screen-button
+      = link_to "Integrate Google Calendar", authorize_path
+    %button.lg-screen-button
+      = link_to "Integrate Google Calendar", authorize_path
 
-    = f.submit "Submit"
+  %p.separator
+    %span or
 
-  %ul
-    - @activities.each do |activity|
-      %li= "Name: " + activity.name.capitalize
-      %li= "Type: " + activity.category.capitalize
-      %li= "Time Spent: " + distance_of_time_in_words(0, @entries.joins(:activity).where(activities: { name: activity.name }).sum(:minutes)*60)
-      %br
-- else
-  %p No activities yet, add one!
-  = form_for @entry do |f|
-    = text_field_tag :activity_name, nil, { placeholder: "Activity name", class: "activity-name-input" } 
-    = select_tag :activity_category, options_for_select([['Contributor', 'contributor'], ['Subtractor', 'subtractor']]), { prompt: "Select type" }
-    = f.number_field :minutes, placeholder: "Minutes spent"
+  - if @activities.any?
+    = form_for @entry, html: { class: "lg-screen-form" } do |f|
+      = f.select(:activity_id, current_user.activities.map { |activity| [activity.name.titleize, activity.id] } + [["Add new...", "", { class: "add-new-activity"}]])
+      = text_field_tag :activity_name, nil, { placeholder: "Activity Name", class: "activity-name-input hidden" } 
+      = select_tag :activity_category, options_for_select([['Contributor', 'contributor'], ['Subtractor', 'subtractor']]), { prompt: "Select type", class: "activity-category-input hidden" }
+      = f.number_field :minutes, placeholder: "Minutes Spent"
+      = f.submit "Submit"
+  - else
+    %p No activities yet, add one!
+    = form_for @entry, class: "sm-screen-form" do |f|
+      = text_field_tag :activity_name, nil, { placeholder: "Activity Name", class: "activity-name-input" } 
+      = select_tag :activity_category, options_for_select([['Contributor', 'contributor'], ['Subtractor', 'subtractor']]), { prompt: "Select type" }
+      = f.number_field :minutes, placeholder: "Minutes Spent"
+      = f.submit "Submit"
+    
+    = form_for @entry, class: "lg-screen-form" do |f|
+      = text_field_tag :activity_name, nil, { placeholder: "Activity Name", class: "activity-name-input" } 
+      = select_tag :activity_category, options_for_select([['Contributor', 'contributor'], ['Subtractor', 'subtractor']]), { prompt: "Select type" }
+      = f.number_field :minutes, placeholder: "Minutes Spent"
+      = f.submit "Submit"
 
-    = f.submit "Submit"
+  .row#sm_screen_row
+    %p#text_lg.category-title.green Contributors
+    %p#text_med.category-sum.green #{mins_to_condensed_time(@contributor_sum.to_i)}
+    %ul
+      - @contributors.each do |activity|
+        %p#text_sm.activity-name= activity.name.titleize + ", " + mins_to_condensed_time(@entries.joins(:activity).where(activities: { name: activity.name }).sum(:minutes).to_i)
+        - activity.entries.order('created_at DESC').each do |entry|
+          %li#p5= entry.created_at.strftime("%b %e, %Y, %l:%M %P") + " - " + mins_to_condensed_time(entry.minutes.to_i)
+          = link_to(image_tag("edit_icon.svg"), edit_entry_path(entry), id: "edit_icon") 
+          = link_to(image_tag("delete_icon.svg"), entry_path(entry), method: :delete, data: { confirm: 'Please confirm that you would like to delete this entry.' }, id: "delete_icon")
 
+  .row#sm_screen_row
+    %p#text_lg.category-title.red Subtractors
+    %p#text_med.category-sum.red #{mins_to_condensed_time(@subtractor_sum.to_i)}
+    %ul
+      - @subtractors.each do |activity|
+        %p#text_sm.activity-name= activity.name.titleize + ", " + mins_to_condensed_time(@entries.joins(:activity).where(activities: { name: activity.name }).sum(:minutes).to_i)
+        - activity.entries.order('created_at DESC').each do |entry|
+          %li#p5= entry.created_at.strftime("%b %e, %Y, %l:%M %P") + " - " + mins_to_condensed_time(entry.minutes.to_i)
+          = link_to(image_tag("edit_icon.svg"), edit_entry_path(entry), id: "edit_icon") 
+          = link_to(image_tag("delete_icon.svg"), entry_path(entry), method: :delete, data: { confirm: 'Please confirm that you would like to delete this entry.' }, id: "delete_icon")
+            
+  .row#lg_screen_row
+    .six.columns
+      %p#text_lg.category-title.green Contributors
+      %p#text_med.category-sum.green #{mins_to_condensed_time(@contributor_sum.to_i)}
+      %ul
+        - @contributors.each do |activity|
+          %p#text_sm.activity-name= activity.name.titleize + ", " + mins_to_condensed_time(@entries.joins(:activity).where(activities: { name: activity.name }).sum(:minutes).to_i)
+          - activity.entries.order('created_at DESC').each do |entry|
+            %li#p5= entry.created_at.strftime("%b %e, %Y, %l:%M %P") + " - " + mins_to_condensed_time(entry.minutes.to_i)
+            = link_to(image_tag("edit_icon.svg"), edit_entry_path(entry), id: "edit_icon") 
+            = link_to(image_tag("delete_icon.svg"), entry_path(entry), method: :delete, data: { confirm: 'Please confirm that you would like to delete this entry.' }, id: "delete_icon")
+
+    .six.columns
+      %p#text_lg.category-title.red Subtractors
+      %p#text_med.category-sum.red #{mins_to_condensed_time(@subtractor_sum.to_i)}
+      %ul
+        - @subtractors.each do |activity|
+          %p#text_sm.activity-name= activity.name.titleize + ", " + mins_to_condensed_time(@entries.joins(:activity).where(activities: { name: activity.name }).sum(:minutes).to_i)
+          - activity.entries.order('created_at DESC').each do |entry|
+            %li#p5= entry.created_at.strftime("%b %e, %Y, %l:%M %P") + " - " + mins_to_condensed_time(entry.minutes.to_i)
+            = link_to(image_tag("edit_icon.svg"), edit_entry_path(entry), id: "edit_icon") 
+            = link_to(image_tag("delete_icon.svg"), entry_path(entry), method: :delete, data: { confirm: 'Please confirm that you would like to delete this entry.' }, id: "delete_icon")
+            

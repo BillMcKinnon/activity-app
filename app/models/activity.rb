@@ -1,6 +1,6 @@
 class Activity < ApplicationRecord
   belongs_to :user
-  has_many :entries
+  has_many :entries, dependent: :destroy
   before_save { name.downcase! }
 
   validates :name, :category, presence: true

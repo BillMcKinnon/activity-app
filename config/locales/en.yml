@@ -31,6 +31,7 @@
 
 en:
   hello: "Hello world"
+
   datetime:
     distance_in_words:
       short:
@@ -46,3 +47,4 @@ en:
         x_days:
           one: "1 day"
           other: "%{count} days"
+

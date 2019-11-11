@@ -1,5 +1,7 @@
 class CalendarEventsController < ApplicationController
   def new
+    @entry = Entry.new
+
     client = Signet::OAuth2::Client.new(client_options)
     client.update!(session[:authorization])
 

@@ -1,8 +1,8 @@
-%h1 Bill's Activity App
+%h1 Onward
 
 %p Hi #{@user.first_name}
 
-%p Welcome to the activity app! Click on the link below to activate your account:
+%p Welcome to Onward! Click on the link below to activate your account:
 
 = link_to nil, edit_account_activation_url(@user.activation_token,
                                                     email: @user.email)

@@ -1,0 +1,10 @@
+.container
+  .row
+    %h1 Edit Entry
+
+    = form_for @entry, method: :patch do |f|
+      = text_field_tag :activity_name, nil, { value: @activity.name.capitalize, class: "activity-name-input" } 
+      = select_tag :activity_category, options_for_select([['Contributor', 'contributor'], ['Subtractor', 'subtractor']]), { prompt: "Select type" }
+      = f.number_field :minutes, value: @entry.minutes.to_i, pattern: "[0-9]"
+
+      = f.submit "Submit"

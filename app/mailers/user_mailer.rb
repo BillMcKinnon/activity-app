@@ -1,15 +1,15 @@
 class UserMailer < ApplicationMailer
-  default from: "billsactivityapp@gmail.com"
+  default from: "onwardappcx@gmail.com"
 
   def account_activation(user)
     @user = user
 
-    mail to: user.email, subject: "Activity App Account Activation"
+    mail to: user.email, subject: "Onward Account Activation"
   end
 
   def password_reset(user)
     @user = user
 
-    mail to: user.email, subject: "Activity App Password Reset"
+    mail to: user.email, subject: "Onward Password Reset"
   end
 end
