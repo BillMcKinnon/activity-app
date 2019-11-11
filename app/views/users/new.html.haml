@@ -1,19 +1,40 @@
 .container#signup_container
-  %h3 Sign Up
-  = form_for :user, url: signup_path do |f|
-    = f.label :first_name, "First Name"
-    = f.text_field :first_name
+  %p#text_lg Sign Up 
+  .sm-screen-form
+    = form_for :user, url: signup_path do |f|
+      = f.label :first_name, "First Name"
+      = f.text_field :first_name
 
-    = f.label :last_name, "Last Name"
-    = f.text_field :last_name
+      = f.label :last_name, "Last Name"
+      = f.text_field :last_name
 
-    = f.label :email
-    = f.email_field :email
+      = f.label :email
+      = f.email_field :email
 
-    = f.label :password
-    = f.password_field :password
+      = f.label :password
+      = f.password_field :password
 
-    = f.label :password_confirmation, "Password Confirmation"
-    = f.password_field :password_confirmation
+      = f.label :password_confirmation, "Password Confirmation"
+      = f.password_field :password_confirmation
 
-    = f.submit "Create Account", { id: "create_account_button" }
+      = f.submit "Create Account", { class: "sm-screen-button" }
+
+  .lg-screen-form
+    = form_for :user, url: signup_path do |f|
+      = f.label :first_name, "First Name"
+      = f.text_field :first_name
+
+      = f.label :last_name, "Last Name"
+      = f.text_field :last_name
+
+      = f.label :email
+      = f.email_field :email
+
+      = f.label :password
+      = f.password_field :password
+
+      = f.label :password_confirmation, "Password Confirmation"
+      = f.password_field :password_confirmation
+
+      = f.submit "Create Account", { class: "lg-screen-button" }
+

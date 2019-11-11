@@ -45,8 +45,10 @@
                       %span.label-body Remember?
                       = f.check_box :remember_me
                   %li= f.submit "Log In"
-                  %li= link_to "Forgot Password", new_password_reset_path
                   %li= link_to "Sign Up", signup_path
+                  %li= link_to "Forgot Password", new_password_reset_path
+                  %li= link_to "Privacy", privacy_path
+        %p.separator
 
     - flash.each do |message_type, message|
       = content_tag(:p, message, id: "text_med", class: "alert alert-#{message_type}")

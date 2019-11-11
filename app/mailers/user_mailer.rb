@@ -1,5 +1,5 @@
 class UserMailer < ApplicationMailer
-  default from: "onwardappcx@gmail.com"
+  default from: ENV['GMAIL_USERNAME']
 
   def account_activation(user)
     @user = user
@@ -13,3 +13,4 @@ class UserMailer < ApplicationMailer
     mail to: user.email, subject: "Onward Password Reset"
   end
 end
+
