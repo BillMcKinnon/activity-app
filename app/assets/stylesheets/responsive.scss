@@ -160,7 +160,8 @@
 
   /***** Homepage *****/
   #home_container {
-    .separator, .separator span, #login_form, #forgot_password_link, #signup_link, #privacy_link {
+    .separator, .separator span, #login_form, #forgot_password_link,
+    #signup_link, #privacy_link, #contact_link {
       display: none;
     }
     
