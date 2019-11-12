@@ -20,7 +20,7 @@
   
   .row#sm_screen_row
     - @events_with_times.each do |event|
-      %button.calendar-event-button{ data: { event: { name: event.summary, duration: ((event.end.date_time - event.start.date_time)*24*60).to_i } } }= [event.summary + ", ", distance_of_time_in_words(event.start.date_time, event.end.date_time, scope: 'datetime.distance_in_words.short')].join
+      %button.sm-screen-button{ data: { event: { name: event.summary, duration: ((event.end.date_time - event.start.date_time)*24*60).to_i } } }= [event.summary + ", ", distance_of_time_in_words(event.start.date_time, event.end.date_time, scope: 'datetime.distance_in_words.short')].join
 
   .row#lg_screen_row
     .six.columns
