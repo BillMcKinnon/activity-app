@@ -3,6 +3,7 @@
 
   - if @activities.any?
     %p#text_lg{ data: { balance: true } } Balance: #{mins_to_condensed_time(@entry_balance.to_i)}
+
   - if session[:authorization]
     .pull-event-form.sm-screen-form
       = form_with(url: "/calendar_events", method: "get", local: true) do
@@ -31,6 +32,7 @@
 
   %p.separator
     %span or
+  %p#text_xsm.lg-screen-separator or
 
   - if @activities.any?
     .sm-screen-form

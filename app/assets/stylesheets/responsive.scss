@@ -172,6 +172,14 @@
 
 /***** Dashboard *****/
   #dashboard_container {
+    .separator {
+      display: none;
+    }
+
+    .lg-screen-separator {
+      display: block;
+    }
+
     #start_hour, #start_minute, #end_hour, #end_minute {
       width: 10%;
     }
