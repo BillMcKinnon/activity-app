@@ -21,6 +21,7 @@
             %ul
               %li= link_to "Dashboard", dashboard_path, id: "dashboard_link"
               %li= link_to "Privacy", privacy_path
+              %li= mail_to "onwardappcx@gmail.com", "Contact"
               %li= link_to "Log Out", logout_path, method: :delete
 
         %header#lg_screen_header_if_logged_in
@@ -29,6 +30,7 @@
             %ul
               %li= link_to "Dashboard", dashboard_path, id: "dashboard_link"
               %li= link_to "Privacy", privacy_path
+              %li= mail_to "onwardappcx@gmail.com", "Contact"
               %li= link_to "Log Out", logout_path, method: :delete
         %p.separator
       - else
@@ -48,6 +50,7 @@
                   %li= link_to "Sign Up", signup_path
                   %li= link_to "Forgot Password", new_password_reset_path
                   %li= link_to "Privacy", privacy_path
+                  %li= mail_to "onwardappcx@gmail.com", "Contact"
         %p.separator
 
     - flash.each do |message_type, message|
