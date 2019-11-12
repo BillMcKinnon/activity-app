@@ -1,12 +1,12 @@
 .container#calendar_events_container
   .row#sm_screen_row
-    = form_for @entry, html: { class: "calendar-entry-form sm-screen-form"} do |f|
+    = form_for @entry, html: { class: "sm-screen-form"} do |f|
       = text_field_tag :activity_name, nil, { placeholder: "Activity Name", data: { event_name_input: true } } 
       = select_tag :activity_category, options_for_select([['Contributor', 'contributor'], ['Subtractor', 'subtractor']]), { prompt: "Select Type" }
       = f.number_field :minutes, { placeholder: "Minutes Spent", data: { event_minutes_input: true } }
 
       = f.submit "Submit"
-    %button#clear_form.sm-screen-button{ data: { clear_form: true } } Clear Form
+      %button#clear_form{ data: { clear_form: true } } Clear Form
     
     = form_for @entry, html: { class: "lg-screen-form"} do |f|
       = text_field_tag :activity_name, nil, { placeholder: "Activity Name", data: { event_name_input: true } } 
@@ -14,14 +14,13 @@
       = f.number_field :minutes, { placeholder: "Minutes Spent", data: { event_minutes_input: true } }
 
       = f.submit "Submit"
-    %button#clear_form.lg-screen-button{ data: { clear_form: true } } Clear Form
+      %button#clear_form{ data: { clear_form: true } } Clear Form
 
     %p#separator
   
   .row#sm_screen_row
     - @events_with_times.each do |event|
-      %button.calendar-event-button.lg-screen-button{ data: { event: { name: event.summary, duration: ((event.end.date_time - event.start.date_time)*24*60).to_i } } }= [event.summary + ", ", distance_of_time_in_words(event.start.date_time, event.end.date_time, scope: 'datetime.distance_in_words.short')].join
-
+      %button.calendar-event-button{ data: { event: { name: event.summary, duration: ((event.end.date_time - event.start.date_time)*24*60).to_i } } }= [event.summary + ", ", distance_of_time_in_words(event.start.date_time, event.end.date_time, scope: 'datetime.distance_in_words.short')].join
 
   .row#lg_screen_row
     .six.columns
