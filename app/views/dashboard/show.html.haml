@@ -52,7 +52,6 @@
     %p No activities yet, add one!
     .sm-screen-form
       = form_for @entry  do |f|
-        = f.select(:activity_id, current_user.activities.map { |activity| [activity.name.titleize, activity.id] } + [["Add new...", ""]], {}, { data: { activity_name_select: true }})
         = text_field_tag :activity_name, nil, { placeholder: "Activity Name", class: "activity-name-input" } 
         = select_tag :activity_category, options_for_select([['Contributor', 'contributor'], ['Subtractor', 'subtractor']]), { prompt: "Select type" }
         = f.number_field :minutes, placeholder: "Minutes Spent"
@@ -60,7 +59,6 @@
     
     .lg-screen-form
       = form_for @entry do |f|
-        = f.select(:activity_id, current_user.activities.map { |activity| [activity.name.titleize, activity.id] } + [["Add new...", ""]], {}, { data: { activity_name_select: true }})
         = text_field_tag :activity_name, nil, { placeholder: "Activity Name", class: "activity-name-input" } 
         = select_tag :activity_category, options_for_select([['Contributor', 'contributor'], ['Subtractor', 'subtractor']]), { prompt: "Select type" }
         = f.number_field :minutes, placeholder: "Minutes Spent"
