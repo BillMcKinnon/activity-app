@@ -4,8 +4,12 @@ class EntriesController < ApplicationController
     
     ActiveRecord::Base.transaction do
       if entry.activity_id.blank?
-        activity = current_user.activities.create(name: params[:activity_name].downcase.strip, category: params[:activity_category])
-        entry.activity_id = activity.id
+        if current_user.activities.exists?(name: params[:activity_name].downcase.strip)
+          entry.activity_id = current_user.activities.find_by(name: params[:activity_name].downcase.strip).id
+        else 
+          activity = current_user.activities.create(name: params[:activity_name].downcase.strip, category: params[:activity_category])
+          entry.activity_id = activity.id
+        end
       end
 
       if entry.save
