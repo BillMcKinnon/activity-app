@@ -30,13 +30,12 @@ class EntriesController < ApplicationController
 
   def update
     entry = current_user.entries.find(params[:id])
-    activity = current_user.activities.find_by(name: params[:activity_name].strip)
+    activity = current_user.activities.find_by(name: params[:activity_name].strip.downcase)
 
     if activity.blank?
       activity = current_user.activities.create(name: params[:activity_name].strip, category: params[:activity_category])
     elsif params[:activity_category] != activity.category
-      activity.destroy
-      activity = current_user.activities.create(name: params[:activity_name].strip, category: params[:activity_category])
+      activity.update(category: params[:activity_category])
     end
 
     if entry.update(entry_params.merge(activity_id: activity.id))
