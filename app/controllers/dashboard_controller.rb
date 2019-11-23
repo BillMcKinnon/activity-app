@@ -5,7 +5,7 @@ class DashboardController < ApplicationController
     @entry = Entry.new
     @activities = current_user.activities
     @contributors = current_user.activities.where({ category: 'contributor' }).order(:name)
-    @subtractors = current_user.activities.where( { category: 'subtractor' }).order(:name)
+    @subtractors = current_user.activities.where({ category: 'subtractor' }).order(:name)
     @contributor_sum = find_contributor_sum
     @subtractor_sum = find_subtractor_sum
   end

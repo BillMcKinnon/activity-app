@@ -7,7 +7,7 @@ class EntriesController < ApplicationController
         if current_user.activities.exists?(name: params[:activity_name].downcase.strip)
           entry.activity_id = current_user.activities.find_by(name: params[:activity_name].downcase.strip).id
         else 
-          activity = current_user.activities.create(name: params[:activity_name].downcase.strip, category: params[:activity_category])
+          activity = current_user.activities.create(name: params[:activity_name].strip, category: params[:activity_category])
           entry.activity_id = activity.id
         end
       end
@@ -30,7 +30,7 @@ class EntriesController < ApplicationController
 
   def update
     entry = current_user.entries.find(params[:id])
-    activity = current_user.activities.find_by(name: params[:activity_name].strip.downcase)
+    activity = current_user.activities.find_by(name: params[:activity_name].downcase.strip)
 
     if activity.blank?
       activity = current_user.activities.create(name: params[:activity_name].strip, category: params[:activity_category])
