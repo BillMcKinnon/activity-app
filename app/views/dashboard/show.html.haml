@@ -1,6 +1,8 @@
 .container#dashboard_container
   %p#text_xl.overview-text Overview for #{current_user.first_name}
 
+  = line_chart @chartkick_data, { colors: ["#90EE90", "#FF7E75"], curve: false, defer: true, messages: {empty: "No data."} }
+
   - if @activities.any?
     %p#text_lg{ data: { balance: true } } Balance: #{mins_to_condensed_time(@entry_balance.to_i)}
 

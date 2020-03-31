@@ -22,6 +22,7 @@ gem "jquery-rails"
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'google-api-client', require: 'google/apis/calendar_v3'
 gem 'chartkick'
+gem 'groupdate'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
