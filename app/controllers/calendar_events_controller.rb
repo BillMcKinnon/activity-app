@@ -1,7 +1,5 @@
 class CalendarEventsController < ApplicationController
   def new
-    @entry = Entry.new
-
     client = Signet::OAuth2::Client.new(client_options)
     client.update!(session[:authorization])
 
@@ -19,13 +17,7 @@ class CalendarEventsController < ApplicationController
       .reject { |event_resource| event_resource.start.nil? || event_resource.end.nil? }
       .reject { |event_time| event_time.start.date_time.nil? || event_time.end.date_time.nil? }
 
-  rescue Google::Apis::AuthorizationError
-    response = client.refresh!
-    session[:authorization] = session[:authorization].merge(response)
-    retry
-  end
-
-  rescue Signet::AuthorizationError
+  rescue Google::Apis::AuthorizationError, Signet::AuthorizationError
     response = client.refresh!
     session[:authorization] = session[:authorization].merge(response)
     retry
@@ -51,4 +43,3 @@ class CalendarEventsController < ApplicationController
     DateTime.strptime(converted_params.join, '%m%d%Y%H%M').rfc3339
   end
 end
-
