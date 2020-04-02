@@ -19,7 +19,7 @@ class CalendarEventsController < ApplicationController
       .reject { |event_resource| event_resource.start.nil? || event_resource.end.nil? }
       .reject { |event_time| event_time.start.date_time.nil? || event_time.end.date_time.nil? }
 
-  rescue Google::Apis::AuthorizationError
+  rescue Signet::AuthorizationError
     response = client.refresh!
     session[:authorization] = session[:authorization].merge(response)
     retry
