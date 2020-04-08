@@ -1,7 +1,12 @@
 .container#dashboard_container
   %p#text_xl.overview-text Overview for #{current_user.first_name}
 
-  = line_chart @chartkick_data, { colors: ["#90EE90", "#FF7E75"], curve: false, defer: true, messages: {empty: "No data."} }
+  %button.button-primary#7_day_view Last 7 days
+  %button.button-primary#30_day_view Last 30 days
+
+  = line_chart @past_week_chartkick_data, { colors: ["#90EE90", "#FF7E75"], curve: false, defer: true, messages: {empty: "No data."} }
+
+  = line_chart @past_month_chartkick_data, { colors: ["#90EE90", "#FF7E75"], curve: false, defer: true, messages: {empty: "No data."} }
 
   - if @activities.any?
     %p#text_lg{ data: { balance: true } } Balance: #{mins_to_condensed_time(@entry_balance.to_i)}
@@ -42,7 +47,7 @@
         = f.select(:activity_id, current_user.activities.map { |activity| [activity.name.titleize, activity.id] } + [["Add new...", ""]], {}, { data: { activity_name_select: true }})
         = text_field_tag :activity_name, nil, { placeholder: "Activity Name", class: "activity-name-input hidden" } 
         = select_tag :activity_category, options_for_select([['Contributor', 'contributor'], ['Subtractor', 'subtractor']]), { prompt: "Select type", class: "activity-category-input hidden" }
-        = f.number_field :minutes, placeholder: "Minutes Spent"
+        = f.number_field :minutes, placeholder: "Minutes Spent", inputmode: "tel"
         = f.submit "Submit"
 
     .lg-screen-form
@@ -58,7 +63,7 @@
       = form_for @entry  do |f|
         = text_field_tag :activity_name, nil, { placeholder: "Activity Name", class: "activity-name-input" } 
         = select_tag :activity_category, options_for_select([['Contributor', 'contributor'], ['Subtractor', 'subtractor']]), { prompt: "Select type" }
-        = f.number_field :minutes, placeholder: "Minutes Spent"
+        = f.number_field :minutes, placeholder: "Minutes Spent", inputmode: "tel"
         = f.submit "Submit"
     
     .lg-screen-form

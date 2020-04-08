@@ -173,6 +173,11 @@
 
 /***** Dashboard *****/
   #dashboard_container {
+    .button-primary {
+      font-size: 11px;
+      height: 25px;
+    }
+
     .separator {
       display: none;
     }

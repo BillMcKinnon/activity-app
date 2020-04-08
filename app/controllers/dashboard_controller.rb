@@ -8,7 +8,8 @@ class DashboardController < ApplicationController
     @subtractors = current_user.activities.where({ category: 'subtractor' }).order(:name)
     @contributor_sum = find_contributor_sum
     @subtractor_sum = find_subtractor_sum
-    @chartkick_data = chartkick_data
+    @past_week_chartkick_data = past_week_chartkick_data
+    @past_month_chartkick_data = past_month_chartkick_data
   end
 
   private 
@@ -73,7 +74,7 @@ class DashboardController < ApplicationController
     data
   end
 
-  def chartkick_data
+  def past_week_chartkick_data
     [
       {
 	name: 'Contributors',
@@ -82,6 +83,53 @@ class DashboardController < ApplicationController
       {
 	name: 'Subtractors',
 	data: past_week_subtractor_data
+      }
+    ] 
+  end
+
+  def past_month_data
+    current_user.entries.joins(:activity).where('entries.created_at >=?', 30.days.ago.beginning_of_day).group('activities.category', 'entries.created_at::date').sum(:minutes)
+  end
+
+  def past_month_contributor_data
+    data = past_month_data
+      .select { |entry_key| entry_key[0] == "contributor" }
+      .inject({}) do |obj, (key, value)|
+        obj[key[1]] = value
+        obj
+      end
+
+    (30.days.ago.to_date..Date.today).each do |date|
+      data[date] ||= 0
+      data[date] += (data[date-1.day] || 0)
+    end
+    data
+  end
+  
+  def past_month_subtractor_data
+    data = past_month_data
+      .select { |entry_key| entry_key[0] == "subtractor" }
+      .inject({}) do |obj, (key, value)|
+        obj[key[1]] = value
+        obj
+      end
+
+    (30.days.ago.to_date..Date.today).each do |date|
+      data[date] ||= 0
+      data[date] += (data[date-1.day] || 0)
+    end
+    data
+  end
+
+  def past_month_chartkick_data
+    [
+      {
+	name: 'Contributors',
+	data: past_month_contributor_data
+      },
+      {
+	name: 'Subtractors',
+	data: past_month_subtractor_data
       }
     ] 
   end

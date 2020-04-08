@@ -3,7 +3,7 @@
     = form_for @entry, html: { class: "sm-screen-form"} do |f|
       = text_field_tag :activity_name, nil, { placeholder: "Activity Name", data: { event_name_input: true } } 
       = select_tag :activity_category, options_for_select([['Contributor', 'contributor'], ['Subtractor', 'subtractor']]), { prompt: "Select Type" }
-      = f.number_field :minutes, { placeholder: "Minutes Spent", data: { event_minutes_input: true } }
+      = f.number_field :minutes, { placeholder: "Minutes Spent", inputmode: "tel", data: { event_minutes_input: true } }
 
       = f.submit "Submit"
       %button#clear_form{ data: { clear_form: true } } Clear Form

@@ -1,5 +1,19 @@
 var ready = function() {
   //*******Dashboard*******
+  //Hide 30 day view on page load.
+  $("#chart-2").addClass("hidden");
+
+  //Show either 30 day or 7 day chart when corresponding button is clicked.
+  $("#30_day_view").click(function(){
+    $("#chart-1").addClass("hidden");
+    $("#chart-2").removeClass("hidden");
+  });  
+
+  $("#7_day_view").click(function(){
+    $("#chart-2").addClass("hidden");
+    $("#chart-1").removeClass("hidden");
+  });  
+
   //Balance will display red if value is negative or green otherwise.
   var value = $("[data-balance]").text();
 
