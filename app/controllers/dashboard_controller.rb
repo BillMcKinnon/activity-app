@@ -1,4 +1,6 @@
 class DashboardController < ApplicationController
+  include DataHelper
+
   def show 
     @entry_balance = find_entry_balance
     @entries = current_user.entries
@@ -28,25 +30,6 @@ class DashboardController < ApplicationController
     contributor_sum - subtractor_sum
   end
 
-  def past_data(activity_category, number_of_days)
-    data = current_user.entries
-      .joins(:activity)
-      .where('entries.created_at >=?', number_of_days.days.ago.beginning_of_day)
-      .group('activities.category', 'entries.created_at::date')
-      .sum(:minutes)
-      .select { |entry_key| entry_key[0] == activity_category }
-      .inject({}) do |obj, (key, value)|
-        obj[key[1]] = value
-        obj
-      end
-
-    (number_of_days.days.ago.to_date..Date.today).each do |date|
-      data[date] ||= 0
-      data[date] += (data[date-1.day] || 0)
-    end
-    data
-  end
-  
   def past_week_chartkick_data
     [
       {

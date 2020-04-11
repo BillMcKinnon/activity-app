@@ -4,7 +4,7 @@
   %button.button-primary#7_day_view Last 7 days
   %button.button-primary#30_day_view Last 30 days
 
-  = line_chart({})
+  = line_chart @past_week_activity_data, { colors: ["#000"], curve: false, defer: true, messages: {empty: "No data."} }
 
   - @activity.entries.order('created_at DESC').each do |entry|
     %li#text_xsm= entry.created_at.strftime("%b %e, %Y") + " - " + mins_to_condensed_time(entry.minutes.to_i)
