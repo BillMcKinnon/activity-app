@@ -79,10 +79,7 @@
     %ul
       - @contributors.each do |activity|
         %p#text_sm.activity-name= activity.name.titleize + ", " + mins_to_condensed_time(@entries.joins(:activity).where(activities: { name: activity.name }).sum(:minutes).to_i)
-        - activity.entries.order('created_at DESC').each do |entry|
-          %li#text_xsm= entry.created_at.strftime("%b %e, %Y") + " - " + mins_to_condensed_time(entry.minutes.to_i)
-          = link_to(image_tag("edit_icon.svg"), edit_entry_path(entry), id: "edit_icon") 
-          = link_to(image_tag("delete_icon.svg"), entry_path(entry), method: :delete, data: { confirm: 'Please confirm that you would like to delete this entry.' }, id: "delete_icon")
+        = link_to("Details", activity_path(activity.id), { class: "activity-details-link"})
 
   .row#sm_screen_row
     %p#text_lg.category-title.red Subtractors
@@ -90,10 +87,7 @@
     %ul
       - @subtractors.each do |activity|
         %p#text_sm.activity-name= activity.name.titleize + ", " + mins_to_condensed_time(@entries.joins(:activity).where(activities: { name: activity.name }).sum(:minutes).to_i)
-        - activity.entries.order('created_at DESC').each do |entry|
-          %li#text_xsm= entry.created_at.strftime("%b %e, %Y") + " - " + mins_to_condensed_time(entry.minutes.to_i)
-          = link_to(image_tag("edit_icon.svg"), edit_entry_path(entry), id: "edit_icon") 
-          = link_to(image_tag("delete_icon.svg"), entry_path(entry), method: :delete, data: { confirm: 'Please confirm that you would like to delete this entry.' }, id: "delete_icon")
+        = link_to("Details", activity_path(activity.id), { class: "activity-details-link"})
             
   .row#lg_screen_row
     .six.columns
@@ -102,19 +96,11 @@
       %ul
         - @contributors.each do |activity|
           %p#text_sm.activity-name= activity.name.titleize + ", " + mins_to_condensed_time(@entries.joins(:activity).where(activities: { name: activity.name }).sum(:minutes).to_i)
-          - activity.entries.order('created_at DESC').each do |entry|
-            %li#text_xsm= entry.created_at.strftime("%b %e, %Y") + " - " + mins_to_condensed_time(entry.minutes.to_i)
-            = link_to(image_tag("edit_icon.svg"), edit_entry_path(entry), id: "edit_icon") 
-            = link_to(image_tag("delete_icon.svg"), entry_path(entry), method: :delete, data: { confirm: 'Please confirm that you would like to delete this entry.' }, id: "delete_icon")
-
+          = link_to("Details", activity_path(activity.id), { class: "activity-details-link"})
     .six.columns
       %p#text_lg.category-title.red Subtractors
       %p#text_med.category-sum.red #{mins_to_condensed_time(@subtractor_sum.to_i)}
       %ul
         - @subtractors.each do |activity|
           %p#text_sm.activity-name= activity.name.titleize + ", " + mins_to_condensed_time(@entries.joins(:activity).where(activities: { name: activity.name }).sum(:minutes).to_i)
-          - activity.entries.order('created_at DESC').each do |entry|
-            %li#text_xsm= entry.created_at.strftime("%b %e, %Y") + " - " + mins_to_condensed_time(entry.minutes.to_i)
-            = link_to(image_tag("edit_icon.svg"), edit_entry_path(entry), id: "edit_icon") 
-            = link_to(image_tag("delete_icon.svg"), entry_path(entry), method: :delete, data: { confirm: 'Please confirm that you would like to delete this entry.' }, id: "delete_icon")
-            
+          = link_to("Details", activity_path(activity.id), { class: "activity-details-link"})

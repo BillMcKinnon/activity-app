@@ -13,6 +13,13 @@
 
 @media (min-width: 1025px) {
   /***** General *****/
+  #edit_icon, #delete_icon {
+    margin: 0 5px;
+
+    img {
+      height: 18px;
+    }
+  }
   p, a, li {
     font-size: 1.25vw;   
     color: #666;
@@ -189,14 +196,6 @@
     #start_hour, #start_minute, #end_hour, #end_minute {
       width: 10%;
     }
-    
-    #edit_icon, #delete_icon {
-      margin: 0 5px;
-
-      img {
-        height: 18px;
-      }
-    }
   }
 
 /***** Calendar Events *****/
@@ -214,10 +213,8 @@
 }  
 
 @media (min-width: 1200px) {
-  #dashboard_container {
-    #edit_icon img, #delete_icon img {
-      height: 15px;
-    }
+  #edit_icon img, #delete_icon img {
+    height: 15px;
   }
 
   #text_xl {

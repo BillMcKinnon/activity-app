@@ -40,10 +40,10 @@ class EntriesController < ApplicationController
 
     if entry.update(entry_params.merge(activity_id: activity.id))
       flash[:success] = "Entry edited successfully."
-      redirect_to dashboard_path
+      redirect_to activity_path(activity.id)
     else
       flash[:danger] = entry.errors.full_messages
-      redirect_to dashboard_path
+      redirect_to activity_path(activity.id)
     end
   end
 
