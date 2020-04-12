@@ -15,6 +15,17 @@
   display: none;
 }
 
+.table-header {
+  text-align: left;
+}
+
+.activity-link, .activity-link:focus, .activity-link:hover,
+.activity-link:active {
+  color: rgb(34, 34, 34);
+  font-size: initial;
+  text-decoration: underline;
+}
+
 p, a, li {
   color: #666666;
   font-size: 4vw;

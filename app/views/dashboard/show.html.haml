@@ -73,34 +73,27 @@
         = f.number_field :minutes, placeholder: "Minutes Spent"
         = f.submit "Submit"
 
-  .row#sm_screen_row
-    %p#text_lg.category-title.green Contributors
-    %p#text_med.category-sum.green #{mins_to_condensed_time(@contributor_sum.to_i)}
-    %ul
+  %h2.table-header Contributors
+  %table.u-full-width
+    %thead
+      %tr
+        %th Activity Name
+        %th Total Duration
+    %tbody
       - @contributors.each do |activity|
-        %p#text_sm.activity-name= activity.name.titleize + ", " + mins_to_condensed_time(@entries.joins(:activity).where(activities: { name: activity.name }).sum(:minutes).to_i)
-        = link_to("Details", activity_path(activity.id), { class: "activity-details-link"})
-
-  .row#sm_screen_row
-    %p#text_lg.category-title.red Subtractors
-    %p#text_med.category-sum.red #{mins_to_condensed_time(@subtractor_sum.to_i)}
-    %ul
+        %tr
+          %td= link_to(activity.name.titleize, activity_path(activity), { class: "activity-link" })
+          %td= mins_to_condensed_time(@entries.joins(:activity).where(activities: { name: activity.name }).sum(:minutes).to_i)
+  
+  %h2.table-header Subtractors 
+  %table.u-full-width
+    %thead
+      %tr
+        %th Activity Name
+        %th Total Duration
+    %tbody
       - @subtractors.each do |activity|
-        %p#text_sm.activity-name= activity.name.titleize + ", " + mins_to_condensed_time(@entries.joins(:activity).where(activities: { name: activity.name }).sum(:minutes).to_i)
-        = link_to("Details", activity_path(activity.id), { class: "activity-details-link"})
-            
-  .row#lg_screen_row
-    .six.columns
-      %p#text_lg.category-title.green Contributors
-      %p#text_med.category-sum.green #{mins_to_condensed_time(@contributor_sum.to_i)}
-      %ul
-        - @contributors.each do |activity|
-          %p#text_sm.activity-name= activity.name.titleize + ", " + mins_to_condensed_time(@entries.joins(:activity).where(activities: { name: activity.name }).sum(:minutes).to_i)
-          = link_to("Details", activity_path(activity.id), { class: "activity-details-link"})
-    .six.columns
-      %p#text_lg.category-title.red Subtractors
-      %p#text_med.category-sum.red #{mins_to_condensed_time(@subtractor_sum.to_i)}
-      %ul
-        - @subtractors.each do |activity|
-          %p#text_sm.activity-name= activity.name.titleize + ", " + mins_to_condensed_time(@entries.joins(:activity).where(activities: { name: activity.name }).sum(:minutes).to_i)
-          = link_to("Details", activity_path(activity.id), { class: "activity-details-link"})
+        %tr
+          %td= link_to(activity.name.titleize, activity_path(activity), { class: "activity-link" })
+          %td= mins_to_condensed_time(@entries.joins(:activity).where(activities: { name: activity.name }).sum(:minutes).to_i)
+
