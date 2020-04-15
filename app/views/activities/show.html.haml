@@ -1,12 +1,23 @@
 .container
-  %h1 #{@activity.name.titleize}
+  %h1#text_xl #{@activity.name.titleize}
 
   %button.button-primary#7_day_view Last 7 days
   %button.button-primary#30_day_view Last 30 days
 
-  = line_chart @past_week_activity_data, { colors: ["#000"], curve: false, defer: true, messages: {empty: "No data."} }
-
-  - @activity.entries.order('created_at DESC').each do |entry|
-    %li#text_xsm= entry.created_at.strftime("%b %e, %Y") + " - " + mins_to_condensed_time(entry.minutes.to_i)
-    = link_to(image_tag("edit_icon.svg"), edit_entry_path(entry), id: "edit_icon") 
-    = link_to(image_tag("delete_icon.svg"), entry_path(entry), method: :delete, data: { confirm: 'Please confirm that you would like to delete this entry.' }, id: "delete_icon")
+  = line_chart @past_week_activity_data, { colors: ["#000"], curve: false, defer: true, messages: {empty: "Insufficient data."} }
+  = line_chart @past_month_activity_data, { colors: ["#000"], curve: false, defer: true, messages: {empty: "Insufficient data."} }
+  
+  %h2.table-header#text_lg History
+  %table.u-full-width
+    %thead
+      %tr
+        %th#text_sm Date
+        %th#text_sm Duration
+        %th#text_sm Actions
+    %tbody
+      - @activity.entries.order('created_at DESC').each do |entry|
+        %tr
+          %td#text_xsm= entry.created_at.strftime("%b %e, %Y")
+          %td#text_xsm= mins_to_condensed_time(entry.minutes.to_i)
+          %td= link_to(image_tag("edit_icon.svg"), edit_entry_path(entry), id: "edit_icon") + link_to(image_tag("delete_icon.svg"), entry_path(entry), method: :delete, data: { confirm: 'Please confirm that you would like to delete this entry.' }, id: "delete_icon")
+  

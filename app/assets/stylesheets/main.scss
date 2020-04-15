@@ -14,9 +14,25 @@
 #lg_screen_row, .lg-screen-button, .lg-screen-separator {
   display: none;
 }
+  
+#chart-1, #chart-2 {
+  margin-bottom: 40px;
+}
+  
+#edit_icon, #delete_icon {
+  margin: 0 15px;
+
+  img {
+    height: 40px;
+  }
+}
 
 .table-header {
   text-align: left;
+}
+
+.u-full-width {
+  margin-bottom: 40px;
 }
 
 .activity-link, .activity-link:focus, .activity-link:hover,
@@ -121,23 +137,23 @@ li {
   }
 }
 #text_xl {
-  font-size: 10vw;
+  font-size: 9vw;
 }
 
 #text_lg {
-  font-size: 8.5vw;
+  font-size: 7.5vw;
 }
 
 #text_med {
-  font-size: 6.75vw;
+  font-size: 5.75vw;
 }
 
 #text_sm {
-  font-size: 5.5vw;
+  font-size: 4.5vw;
 }
 
 #text_xsm {
-  font-size: 4.75vw;
+  font-size: 3.75vw;
 }
 
 /***** Navigation *****/
@@ -254,20 +270,8 @@ li {
     font-size: 3.1vw;
   }
 
-  #chart-1, #chart-2 {
-    margin-bottom: 40px;
-  }
-
   #start_hour, #start_minute, #end_hour, #end_minute {
     width: 40%;
-  }
-
-  #edit_icon, #delete_icon {
-    margin: 0 15px;
-
-    img {
-      height: 40px;
-    }
   }
 }
 

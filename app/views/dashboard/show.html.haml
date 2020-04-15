@@ -4,9 +4,9 @@
   %button.button-primary#7_day_view Last 7 days
   %button.button-primary#30_day_view Last 30 days
 
-  = line_chart @past_week_chartkick_data, { colors: ["#90EE90", "#FF7E75"], curve: false, defer: true, messages: {empty: "No data."} }
+  = line_chart @past_week_chartkick_data, { colors: ["#90EE90", "#FF7E75"], curve: false, defer: true, messages: {empty: "Insufficient data."} }
 
-  = line_chart @past_month_chartkick_data, { colors: ["#90EE90", "#FF7E75"], curve: false, defer: true, messages: {empty: "No data."} }
+  = line_chart @past_month_chartkick_data, { colors: ["#90EE90", "#FF7E75"], curve: false, defer: true, messages: {empty: "Insufficient data."} }
 
   - if @activities.any?
     %p#text_lg{ data: { balance: true } } Balance: #{mins_to_condensed_time(@entry_balance.to_i)}
@@ -73,27 +73,27 @@
         = f.number_field :minutes, placeholder: "Minutes Spent"
         = f.submit "Submit"
 
-  %h2.table-header Contributors
+  %h2.table-header#text_lg Contributors
   %table.u-full-width
     %thead
       %tr
-        %th Activity Name
-        %th Total Duration
+        %th#text_sm Activity Name
+        %th#text_sm Total Duration
     %tbody
       - @contributors.each do |activity|
         %tr
-          %td= link_to(activity.name.titleize, activity_path(activity), { class: "activity-link" })
-          %td= mins_to_condensed_time(@entries.joins(:activity).where(activities: { name: activity.name }).sum(:minutes).to_i)
+          %td= link_to(activity.name.titleize, activity_path(activity), { class: "activity-link", id: "text_xsm" })
+          %td#text_xsm= mins_to_condensed_time(@entries.joins(:activity).where(activities: { name: activity.name }).sum(:minutes).to_i)
   
-  %h2.table-header Subtractors 
+  %h2.table-header#text_lg Subtractors 
   %table.u-full-width
     %thead
       %tr
-        %th Activity Name
-        %th Total Duration
+        %th#text_sm Activity Name
+        %th#text_sm Total Duration
     %tbody
       - @subtractors.each do |activity|
         %tr
-          %td= link_to(activity.name.titleize, activity_path(activity), { class: "activity-link" })
-          %td= mins_to_condensed_time(@entries.joins(:activity).where(activities: { name: activity.name }).sum(:minutes).to_i)
+          %td= link_to(activity.name.titleize, activity_path(activity), { class: "activity-link", id: "text_xsm" })
+          %td#text_xsm= mins_to_condensed_time(@entries.joins(:activity).where(activities: { name: activity.name }).sum(:minutes).to_i)
 

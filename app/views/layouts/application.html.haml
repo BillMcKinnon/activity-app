@@ -14,7 +14,7 @@
     - unless controller_name == "password_resets"
       - if logged_in?
         %header#header
-          = link_to image_tag("logo.jpg", { id: "logo" }), root_path
+          = link_to image_tag("logo.jpg", { id: "logo" }), dashboard_path
           %nav#nav_hamburger
             = label_tag("hamburger", "&#9776;".html_safe)
             = check_box_tag("hamburger")
@@ -25,7 +25,7 @@
               %li= link_to "Log Out", logout_path, method: :delete
 
         %header#lg_screen_header_if_logged_in
-          = link_to image_tag("logo.jpg", { id: "logo" }), root_path
+          = link_to image_tag("logo.jpg", { id: "logo" }), dashboard_path
           %nav#lg_screen_nav
             %ul
               %li= link_to "Dashboard", dashboard_path, id: "dashboard_link"
